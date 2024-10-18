@@ -4,9 +4,9 @@ import PackageDescription
 let package = Package(
     name: "CZWeatherKit",
     platforms: [
-        .iOS(.v10), // Adjust this based on your target platforms
-        .tvOS(.v10),
-        .macOS(.v10_10)
+        .iOS(.v8),
+        .macOS(.v10_10),
+        .tvOS(.v9)
     ],
     products: [
         .library(
@@ -14,16 +14,18 @@ let package = Package(
             targets: ["CZWeatherKit"]),
     ],
     dependencies: [
-        // Add dependencies here, if needed
+        .package(url: "https://github.com/pinterest/PINCache.git", from: "2.1.0")
     ],
     targets: [
         .target(
             name: "CZWeatherKit",
-            path: "CZWeatherKit", // Adjust this based on the location of your source files
-            exclude: ["Tests"],  // Exclude any unnecessary files
-            resources: [
-                // Define any resources if needed
-            ]
+            dependencies: [
+                .product(name: "PINCache", package: "PINCache")
+            ],
+            path: "CZWeatherKit",
+            publicHeadersPath: ".",
+            sources: ["CZWeatherKit"],
+            exclude: ["Tests"] // If needed, adjust based on folder structure
         ),
         .testTarget(
             name: "CZWeatherKitTests",
